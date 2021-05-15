@@ -103,6 +103,11 @@
                 };
                 this.rows.splice(file.id, 1);
                 this.$axios.post('api/actions/staged', payload, { responseType: 'blob' }).then(response => {
+                    if (response.status === 200) {
+                        this.$toast.success('File unstaged!');
+                    } else {
+                        this.$toast.error('Failed to unstage file. Check logs and try again');
+                    }
                     this.refresh();
                 });
             },

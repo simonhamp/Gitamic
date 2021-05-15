@@ -107,6 +107,11 @@
                 };
                 Vue.delete(this.rows, file.id);
                 this.$axios.post('api/actions/unstaged', payload, { responseType: 'blob' }).then(response => {
+                    if (response.status === 200) {
+                        this.$toast.success('File staged!');
+                    } else {
+                        this.$toast.error('Failed to stage file. Check logs and try again');
+                    }
                     this.refresh();
                 });
             },
