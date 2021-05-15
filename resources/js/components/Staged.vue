@@ -2,7 +2,7 @@
     <div>
         <data-list ref="list" :visibleColumns="columns" :columns="columns" :rows="rows" sortColumn="path" sortDirection="asc">
             <div class="card p-0 relative" slot-scope="{ filteredRows: rows }">
-                <data-list-bulk-actions url="api/actions/staged" @started="beginAction" @completed="refresh" />
+                <data-list-bulk-actions url="api/actions/staged" @started="beginAction" @completed="finishAction" />
 
                 <data-list-table :rows="rows" allow-bulk-actions="true">
                     <template slot="cell-change" slot-scope="{ row: file }">
@@ -89,6 +89,13 @@
 
                     Vue.set(this.$root.$refs.status.unstaged, index, row);
                 });
+            },
+
+            finishAction(success) {
+                if (success == null) {
+                    this.$toast.success('Bulk action completed successfully');
+                }
+                this.refresh();
             },
 
             async refresh() {
