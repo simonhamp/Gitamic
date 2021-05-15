@@ -198,6 +198,20 @@
                 await this.getStatus();
                 this.loaded = true;
             },
+
+            async initRepo() {
+                this.loaded = false;
+                let response = await this.$axios.post(cp_url(`gitamic/api/init`));
+
+                if (response.status === 200) {
+                    this.$toast.success('Repo initialized. Loading status...');
+                    await this.getStatus();
+                } else {
+                    this.$toast.error('Failed to initialize. Check your logs. Try initializing manually');
+                }
+
+                this.loaded = true;
+            }
         }
     }
 </script>

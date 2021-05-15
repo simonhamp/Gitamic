@@ -3,6 +3,7 @@
 namespace SimonHamp\Gitamic\Http\Controllers;
 
 use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
 use SimonHamp\Gitamic\Contracts\SiteRepository;
 
 class GitamicApiController
@@ -41,7 +42,16 @@ class GitamicApiController
         return view('gitamic::status', ['wrapper_class' => 'max-w-full', 'data' => json_encode($data)]);
     }
 
-    public function actions($type)
+    public function init(): JsonResponse
+    {
+        app()->forgetInstance(SiteRepository::class);
+        $result = shell_exec('cd ../ && git init');
+        $git = app(SiteRepository::class);
+        $success = $result && ! $git->repo()->isBare();
+        return response()->json(['success' => $success]);
+    }
+
+    public function actions($type): JsonResponse
     {
         $method = Str::camel("get_{$type}_actions");
         return response()->json($this->{$method}());
