@@ -88,8 +88,6 @@
                     return ! selections.includes(row.id);
                 });
 
-                console.log(Object.keys(selected));
-
                 Object.values(selected).forEach(row => {
                     this.$root.$refs.status.staged.push(row);
                 });
