@@ -30,6 +30,11 @@ class Repository implements Contracts\SiteRepository
         $this->repo = $repo;
     }
 
+    public function repo(): GitRepository
+    {
+        return $this->repo;
+    }
+
     public function getFilesOfType($type): Collection
     {
         $method = Str::camel("get_{$type}_files");

@@ -2,10 +2,13 @@
 
 namespace SimonHamp\Gitamic\Contracts;
 
+use Gitonomy\Git\Repository;
 use Illuminate\Support\Collection;
 
 interface SiteRepository
 {
+    public function repo(): Repository;
+
     public function getFilesOfType($type): Collection;
 
     public function getUnstagedFiles(): Collection;
