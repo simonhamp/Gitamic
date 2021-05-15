@@ -57,7 +57,7 @@ class GitamicApiController
         return response()->json($this->{$method}());
     }
 
-    public function doAction(SiteRepository $git, $type)
+    public function doAction(SiteRepository $git, $type): JsonResponse
     {
         $action = request()->input('action');
         $selections = request()->input('selections');
@@ -69,28 +69,28 @@ class GitamicApiController
         return response()->json(['action' => $git->{$action}($files->all())]);
     }
 
-    public function commit(SiteRepository $git)
+    public function commit(SiteRepository $git): JsonResponse
     {
         $result = $git->commit(request()->input('commit_message'));
 
         return response()->json(['result' => $result]);
     }
 
-    public function push(SiteRepository $git)
+    public function push(SiteRepository $git): JsonResponse
     {
         $result = $git->push();
 
         return response()->json(['result' => $result]);
     }
 
-    public function pull(SiteRepository $git)
+    public function pull(SiteRepository $git): JsonResponse
     {
         $result = $git->pull();
 
         return response()->json(['result' => $result]);
     }
 
-    protected function getUnstagedActions()
+    protected function getUnstagedActions(): array
     {
         return [
             [
@@ -111,7 +111,7 @@ class GitamicApiController
         ];
     }
 
-    protected function getStagedActions()
+    protected function getStagedActions(): array
     {
         return [
             [
