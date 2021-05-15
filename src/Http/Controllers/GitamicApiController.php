@@ -9,6 +9,11 @@ class GitamicApiController
 {
     public function status(SiteRepository $git)
     {
+        if ($git->repo()->isBare()) {
+            $data = json_encode(['bare' => true, 'loaded' => true]);
+            return view('gitamic::status', ['wrapper_class' => 'max-w-full', 'data' => $data]);
+        }
+
         $unstaged = $git->getUnstagedFiles();
         $staged = $git->getStagedFiles();
 
@@ -31,6 +36,7 @@ class GitamicApiController
         }
 
         $data['loaded'] = true;
+        $data['bare'] = false;
 
         return view('gitamic::status', ['wrapper_class' => 'max-w-full', 'data' => json_encode($data)]);
     }

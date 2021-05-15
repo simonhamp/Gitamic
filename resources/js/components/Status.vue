@@ -19,7 +19,7 @@
         <div class="flex mb-3">
             <h1 class="flex-1">{{ __('Gitamic') }}</h1>
 
-            <button class="btn" @click.prevent="getStatus(true)">{{ __('Refresh') }}</button>
+            <button class="btn" @click.prevent="getStatus(true)" v-if="! bare">{{ __('Refresh') }}</button>
 
             <button
                 v-if="hasStagedChanges"
@@ -49,7 +49,23 @@
             <loading-graphic  />
         </div>
 
-        <div v-if="loaded">
+        <div v-if="loaded && bare" class="card relative">
+            <p class="mb-2">Your repo hasn't been initialized. Please initialize it before using Gitamic:</p>
+
+            <div class="flex justify-center my-4">
+                <button class="btn-primary" @click.prevent="initRepo()">{{ __('Initialize repo') }}</button>
+            </div>
+
+            <p class="my-2">Alternatively, you can do so manually from your command line:</p>
+
+            <div class="bg-grey-30 py-2 px-3">
+                <kbd>
+                    git init
+                </kbd>
+            </div>
+        </div>
+
+        <div v-if="loaded && ! bare">
             <div class="my-4">
                 <h2 class="mb-2">Status</h2>
                 <pre>{{ status }}</pre>
@@ -90,6 +106,7 @@
 
         data() {
             return {
+                bare: false,
                 loaded: false,
                 confirming: false,
                 unstaged: [],
@@ -119,7 +136,7 @@
         },
 
         created() {
-            for(const [key, value] of Object.entries(this.$props.data)) {
+            for (const [key, value] of Object.entries(this.$props.data)) {
                 this[key] = value;
             }
 
@@ -137,6 +154,7 @@
                 let response = await this.$axios.get(cp_url(`gitamic/api/status`));
 
                 this.loaded = true;
+                this.bare = response.data.bare;
                 this.unstaged = response.data.unstaged;
                 this.staged = response.data.staged;
                 this.meta = response.data.meta;
