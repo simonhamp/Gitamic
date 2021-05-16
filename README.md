@@ -23,6 +23,12 @@ And even more features are coming as Gitamic is under active development!
 - Stashing
 - Restoring
 
+## Requirements
+
+- PHP 7.4+
+- Statamic 3+ (running on Laravel 7+)
+- git 2.30+
+
 ## Installation and Setup
 ### Statamic CP
 Using the Statamic CP is the easiest way to install Gitamic. Under **Tools > Addons**, use the search to find 'Gitamic'
@@ -44,8 +50,8 @@ Once Composer has finished downloading the necessary dependencies, you'll need t
     ],
 ```
 
-Once Gitamic is installed, just refresh your CP and you can use it immediately. It relies on wherever your site is
-running to contain a git repository.
+Once Gitamic is installed, just refresh your CP and you can use it immediately. Even if your site hasn't been
+initialised with a git repository, you can use Gitamic to get started!
 
 #### Setting the git committer
 
@@ -64,7 +70,7 @@ GITAMIC_GIT_USER_EMAIL="simon.hamp@me.com"
 > When using Statamic Pro's Git Integration, if the above keys aren't defined, Gitamic will fallback on
 > `STATAMIC_GIT_USER_NAME` and `STATAMIC_GIT_USER_EMAIL`, if those _are_ defined.
 
-If you'd like to use the details of the logged-in user as the committer, you will need to enable the
+If you'd like to use the details of the logged-in Statamic user as the committer, you will need to enable the
 `gitamic.use_authenticated` option in `config/gitamic.php`:
 
 ```php
@@ -75,11 +81,14 @@ return [
 ];
 ```
 
-You will need to publish this config file to your site in order to make that change:
+You will need to publish this config file to your site in order to make that change (this should already be done as part
+of the add-on's installation):
 
 ```bash
 php artisan vendor:publish --provider=SimonHamp\\Gitamic\\ServiceProvider
 ```
+
+Or you can edit it in the `Gitamic` > `Settings` screen!
 
 #### Statamic Pro
 Gitamic **does not** require Statamic Pro, nor [Statamic's Git Integration](https://statamic.dev/git-integration) to be
