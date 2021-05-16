@@ -194,7 +194,7 @@ class Repository implements Contracts\SiteRepository
 
     public function status(): string
     {
-        return Cache::remember('gitamic.status', 60, function() {
+        return Cache::remember('gitamic.status', config('gitamic.cache.ttl'), function() {
             $this->fetchAll();
 
             $status = $this->repo->run('status');
