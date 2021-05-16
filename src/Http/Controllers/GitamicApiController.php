@@ -30,6 +30,7 @@ class GitamicApiController
             'behind' => $git->behind(),
             'diverged' => $git->diverged(),
             'status' => $git->status(),
+            'current_branch' => $git->currentBranch(),
         ];
 
         if (request()->wantsJson()) {

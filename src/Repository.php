@@ -71,6 +71,33 @@ class Repository implements Contracts\SiteRepository
             });
     }
 
+    public function currentBranch(): array
+    {
+        return $this->branches()->where('current')->first();
+    }
+
+    public function branches(): Collection
+    {
+        return Cache::remember('gitamic.branches', config('gitamic.cache.ttl'), function() {
+            $args = ['-vv'];
+
+            $branches = trim($this->repo->run('branch', $args));
+
+            return collect(preg_split("/((\r?\n)|(\r\n?))/", $branches))
+                ->transform(function ($branch) {
+                    // Parse the branch data for the different parts
+                    preg_match('/^[\s|\*]\s(?<name>.*?)\s+(?<commit>[0-9A-f]{7})\s\[?(?(?<=\[)(?<tracking>.*?)|.*)\]?\s/', $branch, $matches);
+
+                    return [
+                        'current' => Str::startsWith($branch, '*'),
+                        'name' => $matches['name'],
+                        'tracking' => $matches['tracking'] ?? 'not tracking',
+                        'commit' => $matches['commit'],
+                    ];
+                });
+        });
+    }
+
     public function stage($files, $args = []): string
     {
         $args = array_merge(array_values($files), array_values($args));
@@ -137,6 +164,7 @@ class Repository implements Contracts\SiteRepository
     public function pull(): string
     {
         Cache::forget('gitamic.status');
+        Cache::forget('gitamic.branches');
 
         return $this->repo->run('pull');
     }
@@ -173,7 +201,7 @@ class Repository implements Contracts\SiteRepository
 
             $status_array = preg_split("/((\r?\n)|(\r\n?))/", $status);
 
-            return implode("\r\n", array_slice($status_array, 0, 2));
+            return implode("\r\n", array_slice($status_array, 1, 2));
         });
     }
 

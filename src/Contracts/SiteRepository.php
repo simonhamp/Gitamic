@@ -19,6 +19,8 @@ interface SiteRepository
 
     public function getPendingFiles(): Collection;
 
+    public function currentBranch(): array;
+
     public function stage($files, $args = []): string;
 
     public function unstage($files, $args = []): string;

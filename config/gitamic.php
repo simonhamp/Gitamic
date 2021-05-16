@@ -9,4 +9,8 @@ return [
         'email' => env('GITAMIC_GIT_USER_EMAIL',  env('STATAMIC_GIT_USER_EMAIL', 'gitamic@example.com')),
     ],
 
+    'cache' => [
+        'ttl' => 300,
+    ]
+
 ];

@@ -68,7 +68,15 @@
         <div v-if="loaded && ! bare">
             <div class="my-4">
                 <h2 class="mb-2">Status</h2>
-                <pre>{{ status }}</pre>
+
+                <div class="card">
+                    <p>
+                        Current branch: <code>{{ current_branch.name }}</code>
+                        &rarr;
+                        <code>{{ current_branch.tracking }}</code>
+                    </p>
+                    <p>{{ status }}</p>
+                </div>
             </div>
 
             <div class="my-4">
@@ -118,6 +126,7 @@
                 behind: false,
                 diverged: false,
                 status: '',
+                current_branch: null,
             }
         },
 
@@ -153,16 +162,11 @@
 
                 let response = await this.$axios.get(cp_url(`gitamic/api/status`));
 
+                for (const [key, value] of Object.entries(response.data)) {
+                    this[key] = value;
+                }
+
                 this.loaded = true;
-                this.bare = response.data.bare;
-                this.unstaged = response.data.unstaged;
-                this.staged = response.data.staged;
-                this.meta = response.data.meta;
-                this.up_to_date = response.data.up_to_date;
-                this.ahead = response.data.ahead;
-                this.behind = response.data.behind;
-                this.diverged = response.data.diverged;
-                this.status = response.data.status;
             },
 
             confirmCommit() {
