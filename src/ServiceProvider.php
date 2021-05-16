@@ -2,6 +2,7 @@
 
 namespace SimonHamp\Gitamic;
 
+use Edalzell\Forma\Forma;
 use Statamic\Facades\User;
 use Statamic\Facades\CP\Nav;
 use Statamic\Providers\AddonServiceProvider;
@@ -51,10 +52,15 @@ class ServiceProvider extends AddonServiceProvider
     {
         parent::boot();
 
+        Forma::add('simonhamp/gitamic');
+
         Nav::extend(function ($nav) {
             $nav->tools('Gitamic')
                 ->route('gitamic.status')
-                ->icon('git');
+                ->icon('git')
+                ->children([
+                    'Settings' => cp_route('gitamic.config.edit'),
+                ]);
         });
     }
 }

@@ -1,0 +1,22 @@
+use_authenticated:
+  display: 'Authenticated user is committer'
+  instructions: |
+    With this setting turned on, the name and email address of the authenticated Statamic user who commits changes
+    using Gitamic will be recorded as the committer.
+  type: toggle
+user.name:
+  if:
+    use_authenticated: 'equals false'
+  display: 'Committer name'
+  type: text
+user.email:
+  if:
+    use_authenticated: 'equals false'
+  display: 'Committer email address'
+  type: text
+cache.ttl:
+  display: 'Git metadata Cache TTL'
+  instructions: |
+    How long the git metadata cache should live.
+  type: text
+
