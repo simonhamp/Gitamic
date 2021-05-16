@@ -1,0 +1,15 @@
+name: Build production resources
+on: [push]
+jobs:
+  Build-Resources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run prod
+      - run: |
+          git config --global user.name 'Simon Hamp'
+          git config --global user.email 'simon.hamp@me.com'
+          git commit -am "Build resources"
+          git push
