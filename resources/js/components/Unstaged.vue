@@ -2,7 +2,7 @@
     <div>
         <data-list ref="list" :visibleColumns="columns" :columns="columns" :rows="rows" sortColumn="path" sortDirection="asc">
             <div class="card p-0 relative" slot-scope="{ filteredRows: rows }">
-                <data-list-bulk-actions url="api/actions/unstaged" @started="beginAction" @completed="refresh" />
+                <data-list-bulk-actions url="api/actions/unstaged" @started="beginAction" @completed="finishAction" />
 
                 <data-list-table :rows="rows" allow-bulk-actions="true">
                     <template slot="cell-change" slot-scope="{ row: file }">
@@ -88,11 +88,16 @@
                     return ! selections.includes(row.id);
                 });
 
-                console.log(Object.keys(selected));
-
                 Object.values(selected).forEach(row => {
                     this.$root.$refs.status.staged.push(row);
                 });
+            },
+
+            finishAction(success) {
+                if (success == null) {
+                    this.$toast.success('Bulk action completed successfully');
+                }
+                this.refresh();
             },
 
             async refresh() {
@@ -107,6 +112,11 @@
                 };
                 Vue.delete(this.rows, file.id);
                 this.$axios.post('api/actions/unstaged', payload, { responseType: 'blob' }).then(response => {
+                    if (response.status === 200) {
+                        this.$toast.success('File staged!');
+                    } else {
+                        this.$toast.error('Failed to stage file. Check logs and try again');
+                    }
                     this.refresh();
                 });
             },

@@ -15,7 +15,7 @@ class ServiceProvider extends AddonServiceProvider
     ];
 
     protected $stylesheets = [
-        __DIR__.'/../resources/dist/js/cp.css'
+        __DIR__.'/../resources/dist/css/cp.css'
     ];
 
     protected $routes = [

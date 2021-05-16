@@ -2,7 +2,7 @@
     <div>
         <data-list ref="list" :visibleColumns="columns" :columns="columns" :rows="rows" sortColumn="path" sortDirection="asc">
             <div class="card p-0 relative" slot-scope="{ filteredRows: rows }">
-                <data-list-bulk-actions url="api/actions/staged" @started="beginAction" @completed="refresh" />
+                <data-list-bulk-actions url="api/actions/staged" @started="beginAction" @completed="finishAction" />
 
                 <data-list-table :rows="rows" allow-bulk-actions="true">
                     <template slot="cell-change" slot-scope="{ row: file }">
@@ -91,6 +91,13 @@
                 });
             },
 
+            finishAction(success) {
+                if (success == null) {
+                    this.$toast.success('Bulk action completed successfully');
+                }
+                this.refresh();
+            },
+
             async refresh() {
                 await this.$root.$refs.status.getStatus();
                 this.$refs.list.clearSelections();
@@ -103,6 +110,11 @@
                 };
                 this.rows.splice(file.id, 1);
                 this.$axios.post('api/actions/staged', payload, { responseType: 'blob' }).then(response => {
+                    if (response.status === 200) {
+                        this.$toast.success('File unstaged!');
+                    } else {
+                        this.$toast.error('Failed to unstage file. Check logs and try again');
+                    }
                     this.refresh();
                 });
             },
