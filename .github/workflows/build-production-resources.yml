@@ -11,5 +11,6 @@ jobs:
       - run: |
           git config --global user.name 'Simon Hamp'
           git config --global user.email 'simon.hamp@me.com'
-          git commit -am "Build resources"
+          git add resource/dist/*
+          git commit -m "Build resources"
           git push
