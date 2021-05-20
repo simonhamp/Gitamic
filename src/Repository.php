@@ -89,7 +89,7 @@ class Repository implements Contracts\SiteRepository
                     Log::debug($branch);
                     
                     // Parse the branch data for the different parts
-                    preg_match('/^[\s|\*]\s(?<name>.*?)\s+(?<commit>[0-9A-f]{7})\s\[?(?(?<=\[)(?<tracking>.*?)|.*)\]?\s/', $branch, $matches);
+                    preg_match('/^[\s|\*]\s(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s\[?(?(?<=\[)(?<tracking>.*?)|.*)\]?\s/', $branch, $matches);
 
                     return [
                         'current' => Str::startsWith($branch, '*'),
