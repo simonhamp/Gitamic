@@ -7,13 +7,26 @@
             @confirm="doCommit"
             @cancel="cancelCommit"
         >
-            <p>Are you sure you want to commit these changes?</p>
-            <ul class="m-2 list-inside">
-                <li v-for="file in staged" class="list-disc">{{ file.relative_path }}</li>
-            </ul>
+            <a href="https://chris.beams.io/posts/git-commit/"
+               target="_blank"
+               v-tooltip="'Click here to read more about commit messages'"
+               class="bg-white border rounded-full h-4 w-4 p-1.5 shadow-sm text-sm font-bold text-grey-70 inline-flex justify-center items-center absolute top-0 right-0 m-2"
+            >
+                ?
+            </a>
 
-            <label for="commit_message">Enter a commit message</label>
-            <textarea v-model="commit_message" class="w-full border rounded font-mono p-2 h-48" id="commit_message"></textarea>
+            <p class="text-sm my-1">
+                You have {{ staged.length }} {{ staged.length === 1 ? 'file' : 'files' }} with changes staged for this commit.
+            </p>
+
+            <p class="text-sm my-1">
+                Write a commit message to describe these changes:
+            </p>
+
+            <div class="mt-4">
+                <label for="commit_message">Enter a commit message</label>
+                <textarea v-model="commit_message" class="w-full border rounded font-mono p-2 h-48" id="commit_message"></textarea>
+            </div>
         </confirmation-modal>
 
         <div class="flex mb-3">
