@@ -67,7 +67,7 @@ GITAMIC_GIT_USER_NAME="Simon Hamp"
 GITAMIC_GIT_USER_EMAIL="simon.hamp@me.com"
 ```
 
-> When using Statamic Pro's Git Integration, if the above keys aren't defined, Gitamic will fallback on
+> When using Statamic Pro's Git Integration, if the above keys aren't defined, Gitamic will fall back on
 > `STATAMIC_GIT_USER_NAME` and `STATAMIC_GIT_USER_EMAIL`, if those _are_ defined.
 
 If you'd like to use the details of the logged-in Statamic user as the committer, you will need to enable the
