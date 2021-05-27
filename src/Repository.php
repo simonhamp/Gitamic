@@ -87,9 +87,9 @@ class Repository implements Contracts\SiteRepository
             return collect(preg_split("/((\r?\n)|(\r\n?))/", $branches))
                 ->transform(function ($branch) {
                     Log::debug($branch);
-                    
+
                     // Parse the branch data for the different parts
-                    preg_match('/^[\s|\*]\s(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s\[?(?(?<=\[)(?<tracking>.*?)|.*)\]?\s/', $branch, $matches);
+                    preg_match('/^[\s|\*]?\s?(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s\[?(?(?<=\[)(?<tracking>.*?)\:?|.*)\]?\s/', $branch, $matches);
 
                     return [
                         'current' => Str::startsWith($branch, '*'),
