@@ -11,5 +11,6 @@ Route::group(['prefix' => 'gitamic/api'], function () {
     Route::post('push', 'GitamicApiController@push');
     Route::post('pull', 'GitamicApiController@pull');
     Route::get('actions/{type}', 'GitamicApiController@actions');
+    Route::post('actions/{type}/list', 'GitamicApiController@actions');
     Route::post('actions/{type}', 'GitamicApiController@doAction');
 });
