@@ -200,7 +200,7 @@ class Repository implements Contracts\SiteRepository
 
     public function parseBranchMeta($branch)
     {
-        $regex = '/^[\s|\*]?\s?(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s\[?(?(?<=\[)(?<tracking>.*?)\:?|.*)\]?\s/';
+        $regex = '/^[\s|\*]?\s?(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s?\[?(?(?<=\[)(?<tracking>.*?)\:?|.*)\]?\s/';
 
         preg_match($regex, $branch, $matches);
 
