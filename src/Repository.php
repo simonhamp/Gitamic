@@ -86,17 +86,7 @@ class Repository implements Contracts\SiteRepository
 
             return collect(preg_split("/((\r?\n)|(\r\n?))/", $branches))
                 ->transform(function ($branch) {
-                    Log::debug($branch);
-
-                    // Parse the branch data for the different parts
-                    preg_match('/^[\s|\*]?\s?(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s\[?(?(?<=\[)(?<tracking>.*?)\:?|.*)\]?\s/', $branch, $matches);
-
-                    return [
-                        'current' => Str::startsWith($branch, '*'),
-                        'name' => $matches['name'],
-                        'tracking' => $matches['tracking'] ?? 'not tracking',
-                        'commit' => $matches['commit'],
-                    ];
+                    return $this->parseBranchMeta($branch);
                 });
         });
     }
@@ -206,6 +196,33 @@ class Repository implements Contracts\SiteRepository
 
             return implode("\r\n", array_slice($status_array, 1, 2));
         });
+    }
+
+    public function parseBranchMeta($branch)
+    {
+        $regex = '/^[\s|\*]?\s?(?<name>.*?)\s+(?<commit>[0-9A-f]{6,})\s?\[?(?(?<=\[)(?<tracking>.*?)\:?|.*)\]?\s/';
+
+        preg_match($regex, $branch, $matches);
+
+        $meta = [
+            'current' => false,
+            'name' => 'unknown',
+            'tracking' => 'unknown',
+            'commit' => 'unknown',
+        ];
+
+        try {
+            $meta = [
+                'current' => Str::startsWith($branch, '*'),
+                'name' => $matches['name'],
+                'tracking' => $matches['tracking'] ?? 'not tracking',
+                'commit' => $matches['commit'],
+            ];
+        } catch (\ErrorException $e) {
+            Log::error("Branch string [{$branch}] not parsed. Please raise an issue: https://github.com/simonhamp/gitamic/issues");
+        }
+
+        return $meta;
     }
 
     protected function fetchAll(): void

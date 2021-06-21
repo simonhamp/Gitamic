@@ -14,6 +14,11 @@
             "SimonHamp\\Gitamic\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SimonHamp\\Gitamic\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "statamic": {
             "name": "Gitamic",
@@ -31,14 +36,15 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "gitonomy/gitlib": "^1.2",
-        "illuminate/support": "^7.0 || ^8.0",
         "statamic/cms": "^3.0",
         "edalzell/forma": "^0.8.12"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
         "nunomaduro/collision": "^5.0",
-        "pestphp/pest": "^0.1.5"
+        "pestphp/pest": "^1.7",
+        "pestphp/pest-plugin-laravel": "^1.0",
+        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0"
     },
     "support": {
         "email": "simon.hamp@me.com"
