@@ -4,8 +4,10 @@ Are you running [Statamic](https://statamic.com) Free version and want git suppo
 Or maybe you're running Statamic Pro already, and you need more control over when, what and how changes get pushed back
 to your repo?
 
-**Gitamic** adds an intuitive git UI to Statamic so that you can have more control over your commits. It's great for
-more complex sites that rely on live-publishing changes from your Statamic CP back to your git repository.
+**Gitamic** adds an intuitive git UI to Statamic so that you can have more control over your commits.
+
+It's great for solo sites where you want more granular control of your git history, but really shines on
+more complex sites that rely on live-publishing whilst pushing changes from your Statamic CP back to your git repository.
 
 ## Features
 - View the 'working tree'
@@ -129,7 +131,7 @@ If you experience any problems with Gitamic or would like to make a feature requ
 [raise an issue](https://github.com/simonhamp/Gitamic/issues) using the appropriate template.
 
 You can also find me (@simonhamp) in the `#3rd-party` channel on the [Statamic Discord](https://statamic.com/discord).
-(Note that I will likely still ask you to fill out a GitHub issue)
+(Note that I will likely still ask you to fill out a GitHub issue).
 
 ## Security
 If you discover any security related issues, please **do not** raise an issue on GitHub. Email simon.hamp@me.com
@@ -137,10 +139,12 @@ instead.
 
 Please note that I will not respond to feature requests or bug reports at this email address.
 
+See [SECURITY](https://github.com/simonhamp/Gitamic/blob/main/SECURITY.md) for more details.
+
 ## License
 Gitamic is a premium add-on, so a license is required for all versions. You may download and install it for free to
 trial it, but you must purchase a license code in order to use this add-on in production.
 
 You can purchase a license code from the [Statamic Marketplace](https://statamic.com/addons/simonhamp/gitamic).
 
-See [LICENSE](https://github.com/simonhamp/Gitamic/blob/main/LICENSE.md)
+See [LICENSE](https://github.com/simonhamp/Gitamic/blob/main/LICENSE.md).
