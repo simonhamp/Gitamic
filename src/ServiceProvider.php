@@ -30,12 +30,14 @@ class ServiceProvider extends AddonServiceProvider
         });
 
         app()->singleton(GitRepository::class, function () {
+            $use_authenticated = config('gitamic.use_authenticated');
             $user = User::current();
 
-            $authenticated = config('gitamic.use_authenticated');
+            $config_user = config('gitamic.user.name') ?? config('statamic.git.user.name', 'Gitamic');
+            $config_email = config('gitamic.user.email') ?? config('statamic.git.user.email', 'gitamic@example.com');
 
-            $name = $authenticated ? $user->name() : config('gitamic.user.name');
-            $email = $authenticated ? $user->email() : config('gitamic.user.email');
+            $name = $use_authenticated ? $user->name() : $config_user;
+            $email = $use_authenticated ? $user->email() : $config_email;
 
             return new GitRepository(base_path(), [
                 'environment_variables' => [

@@ -6,8 +6,8 @@ to your repo?
 
 **Gitamic** adds an intuitive git UI to Statamic so that you can have more control over your commits.
 
-It's great for solo sites where you want more granular control of your git history, but really shines on
-more complex sites that rely on live-publishing whilst pushing changes from your Statamic CP back to your git repository.
+It's great for solo sites where you want more granular control of your git history, but really shines on more complex
+sites that rely on live-publishing whilst pushing changes from your Statamic CP back to your git repository.
 
 ## Features
 - View the 'working tree'
@@ -57,6 +57,8 @@ initialised with a git repository, you can use Gitamic to get started!
 
 #### Setting the git committer
 
+> You can edit all of these settings and more in **Gitamic > Settings**!
+
 By default, Gitamic uses the following details for the git committer name and email address:
 
 - name: `Gitamic`
@@ -69,8 +71,9 @@ GITAMIC_GIT_USER_NAME="Simon Hamp"
 GITAMIC_GIT_USER_EMAIL="simon.hamp@me.com"
 ```
 
-> When using Statamic Pro's Git Integration, if the above keys aren't defined, Gitamic will fall back on
-> `STATAMIC_GIT_USER_NAME` and `STATAMIC_GIT_USER_EMAIL`, if those _are_ defined.
+> If you're using Statamic Pro's Git Integration and would prefer Gitamic to use the same set of user details,
+> simply set these values to `null` in you `config/gitamic.php` or empty in your Gitamic Settings, and it
+> will use `STATAMIC_GIT_USER_NAME` and `STATAMIC_GIT_USER_EMAIL` instead, if those are defined.
 
 If you'd like to use the details of the logged-in Statamic user as the committer, you will need to enable the
 `gitamic.use_authenticated` option in `config/gitamic.php`:
@@ -89,8 +92,6 @@ of the add-on's installation):
 ```bash
 php artisan vendor:publish --provider=SimonHamp\\Gitamic\\ServiceProvider
 ```
-
-Or you can edit it in **Gitamic > Settings**!
 
 #### Statamic Pro
 Gitamic **does not** require Statamic Pro, nor [Statamic's Git Integration](https://statamic.dev/git-integration) to be
